@@ -1264,7 +1264,6 @@ public class CalendarView extends FrameLayout {
 
     /**
      * 添加事物标记
-     *
      * @param calendar calendar
      */
     public final void addSchemeDate(Calendar calendar) {
@@ -1284,7 +1283,6 @@ public class CalendarView extends FrameLayout {
 
     /**
      * 添加事物标记
-     *
      * @param mSchemeDates mSchemeDates
      */
     public final void addSchemeDate(Map<String, Calendar> mSchemeDates) {

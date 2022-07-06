@@ -17,7 +17,9 @@ import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
 import com.haibin.calendarview.TrunkBranchAnnals;
 import com.haibin.calendarviewproject.base.activity.BaseActivity;
+import com.haibin.calendarviewproject.birthday.BirthdayActivity;
 import com.haibin.calendarviewproject.colorful.ColorfulActivity;
+import com.haibin.calendarviewproject.coming.ComingActivity;
 import com.haibin.calendarviewproject.custom.CustomActivity;
 import com.haibin.calendarviewproject.full.FullActivity;
 import com.haibin.calendarviewproject.index.IndexActivity;
@@ -98,6 +100,7 @@ public class MainActivity extends BaseActivity implements
                 mTextMonthDay.setText(String.valueOf(mYear));
             }
         });
+
         findViewById(R.id.iv_more).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,6 +154,7 @@ public class MainActivity extends BaseActivity implements
                                                 mCalendarView.getMaxRangeCalendar()))
                                         .show();
                                 break;
+
                         }
                     }
                 };
@@ -190,14 +194,12 @@ public class MainActivity extends BaseActivity implements
     @SuppressWarnings("unused")
     @Override
     protected void initData() {
-
         final int year = mCalendarView.getCurYear();
         final int month = mCalendarView.getCurMonth();
 
         Map<String, Calendar> map = new HashMap<>();
         for (int y = 1997; y < 2082; y++) {
             for (int m = 1; m <= 12; m++) {
-
                 map.put(getSchemeCalendar(y, m, 1, 0xFF40db25, "假").toString(),
                         getSchemeCalendar(y, m, 1, 0xFF40db25, "假"));
 
@@ -277,6 +279,9 @@ public class MainActivity extends BaseActivity implements
         findViewById(R.id.ll_progress).setOnClickListener(this);
         findViewById(R.id.ll_custom).setOnClickListener(this);
         findViewById(R.id.ll_full).setOnClickListener(this);
+        findViewById(R.id.ll_coming).setOnClickListener(this);
+
+        ComingActivity.show(this);
     }
 
     @Override
@@ -359,7 +364,9 @@ public class MainActivity extends BaseActivity implements
             case R.id.ll_progress:
                 ProgressActivity.show(this);
                 break;
-
+            case R.id.ll_coming:
+                ComingActivity.show(this);
+                break;
         }
     }
 

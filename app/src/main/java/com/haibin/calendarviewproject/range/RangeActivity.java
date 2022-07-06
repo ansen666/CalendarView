@@ -77,6 +77,7 @@ public class RangeActivity extends BaseActivity implements
                 mCalendarView.getCurYear(), mCalendarView.getCurMonth(), mCalendarView.getCurDay()
 
                 );
+
         mCalendarView.post(new Runnable() {
             @Override
             public void run() {

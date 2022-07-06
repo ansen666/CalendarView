@@ -28,8 +28,7 @@ public class CustomRangeWeekView extends RangeWeekView {
 
 
     @Override
-    protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, boolean hasScheme,
-                                     boolean isSelectedPre, boolean isSelectedNext) {
+    protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, boolean hasScheme,boolean isSelectedPre, boolean isSelectedNext) {
         int cx = x + mItemWidth / 2;
         int cy = mItemHeight / 2;
 

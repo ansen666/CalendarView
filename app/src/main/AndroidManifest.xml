@@ -36,6 +36,8 @@
         <activity android:name=".full.FullActivity" />
         <activity android:name=".TestActivity" />
         <activity android:name=".CalendarActivity" />
+        <activity android:name=".coming.ComingActivity" />
+        <activity android:name=".birthday.BirthdayActivity" />
     </application>
 
 </manifest>

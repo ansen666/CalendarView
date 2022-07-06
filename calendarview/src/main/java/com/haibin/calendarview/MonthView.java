@@ -33,9 +33,7 @@ public abstract class MonthView extends BaseMonthView {
     protected void onDraw(Canvas canvas) {
         if (mLineCount == 0)
             return;
-        mItemWidth = (getWidth() -
-                mDelegate.getCalendarPaddingLeft() -
-                mDelegate.getCalendarPaddingRight()) / 7;
+        mItemWidth = (getWidth() - mDelegate.getCalendarPaddingLeft() - mDelegate.getCalendarPaddingRight()) / 7;
         onPreviewHook();
         int count = mLineCount * 7;
         int d = 0;
@@ -94,6 +92,7 @@ public abstract class MonthView extends BaseMonthView {
                 onDrawSelected(canvas, calendar, x, y, false);
             }
         }
+
         onDrawText(canvas, calendar, x, y, hasScheme, isSelected);
     }
 
@@ -246,7 +245,6 @@ public abstract class MonthView extends BaseMonthView {
      * @param y        日历Card y起点坐标
      */
     protected abstract void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y);
-
 
     /**
      * 绘制日历文本

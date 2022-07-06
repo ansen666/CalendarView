@@ -273,12 +273,11 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
     }
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
-    void updateItemHeight() {
+    public void updateItemHeight() {
         this.mItemHeight = mDelegate.getCalendarItemHeight();
         Paint.FontMetrics metrics = mCurMonthTextPaint.getFontMetrics();
         mTextBaseLine = mItemHeight / 2 - metrics.descent + (metrics.bottom - metrics.top) / 2;
     }
-
 
     /**
      * 移除事件

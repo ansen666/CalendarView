@@ -7,4 +7,15 @@
     <color name="line_color">#e7e7e7</color>
     <color name="content_background">#f2f2f2</color>
     <color name="solar_background">#009988</color>
+
+
+    <color name="mainColor">#FF4D88</color>
+    <color name="white">#ffffff</color>
+
+    <color name="foresee_bg_color">#FFCBDC</color>
+    <color name="select_day_color">#FF0000</color>
+
+
+    <color name="pregnant_up">#77D887</color>  <!--    怀孕向上或者向下，文本颜色 -->
+    <color name="ovulation_color">#BE90FF</color> <!--    排卵期，文本颜色 -->
 </resources>

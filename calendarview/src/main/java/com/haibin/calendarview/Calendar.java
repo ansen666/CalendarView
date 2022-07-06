@@ -121,7 +121,6 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
      */
     private Calendar lunarCalendar;
 
-
     public int getYear() {
         return year;
     }
@@ -428,6 +427,10 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
             this.type = type;
             this.shcemeColor = shcemeColor;
             this.scheme = scheme;
+        }
+
+        public Scheme(int type) {
+            this.type = type;
         }
 
         public Scheme(int shcemeColor, String scheme) {
