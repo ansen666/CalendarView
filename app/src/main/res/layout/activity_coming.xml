@@ -114,6 +114,4 @@
             app:group_text_size="14sp" />
 
     </com.haibin.calendarview.CalendarLayout>
-
-
 </LinearLayout>

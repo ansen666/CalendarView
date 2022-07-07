@@ -17,7 +17,6 @@ import java.util.List;
  */
 
 public class FullMonthView extends MonthView {
-
     private Paint mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     /**
@@ -80,11 +79,8 @@ public class FullMonthView extends MonthView {
         int sw = dipToPx(getContext(), mItemWidth / 10);
         int sh = dipToPx(getContext(), 4);
         for (Calendar.Scheme scheme : schemes) {
-
             mSchemePaint.setColor(scheme.getShcemeColor());
-
             canvas.drawRect(x + mItemWidth - sw -  2 * space,
-
                     indexY - sh, x + mItemWidth - 2 * space, indexY, mSchemePaint);
             indexY = indexY - space -sh;
         }
@@ -110,8 +106,7 @@ public class FullMonthView extends MonthView {
         boolean isInRange = isInRange(calendar);
 
         if (isSelected) {
-            canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
-                    mSelectTextPaint);
+            canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,mSelectTextPaint);
             canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mSelectedLunarTextPaint);
         } else if (hasScheme) {
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,

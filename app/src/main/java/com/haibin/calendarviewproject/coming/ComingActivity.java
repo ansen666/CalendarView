@@ -91,6 +91,8 @@ public class ComingActivity extends BaseActivity implements
                 getSchemeCalendar(year, month, 10));
         map.put(getSchemeCalendar(year, month, 11).toString(),
                 getSchemeCalendar(year, month, 11));
+        map.put(getSchemeCalendar(year, month, 20).toString(),
+                getSchemeCalendar(year, month, 20));
 
         map.put(getSchemeCalendar(year, 6, 11).toString(),
                 getSchemeCalendar(year, 6, 11));
@@ -131,7 +133,14 @@ public class ComingActivity extends BaseActivity implements
 
         if(year == 2022 && month== 7 && day == 9){
             calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.START));
+            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.SEX));
+            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.FLOW));
 
+            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.FLOW));
+
+            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.SYMPTOM));
+            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.MOOD));
+            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.TEMPERATURE));
         }
 
         if(year == 2022 && month== 7 && day == 10){
@@ -143,6 +152,10 @@ public class ComingActivity extends BaseActivity implements
 
         if(year == 2022 && month== 7 && day == 11){
             calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.END));
+        }
+
+        if(year == 2022 && month== 7 && day == 20){
+            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.MOOD));
         }
 
         if(year == 2022 && month== 6 && day == 11){
