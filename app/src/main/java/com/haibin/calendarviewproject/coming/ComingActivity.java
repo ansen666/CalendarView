@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
+import com.haibin.calendarview.CalendarUtil;
 import com.haibin.calendarview.CalendarView;
 import com.haibin.calendarviewproject.Article;
 import com.haibin.calendarviewproject.ArticleAdapter;
@@ -34,15 +35,14 @@ import java.util.Map;
  */
 public class ComingActivity extends BaseActivity implements
         CalendarView.OnCalendarSelectListener,
-        CalendarView.OnYearChangeListener, CalendarView.OnMonthChangeListener,
-        View.OnClickListener {
+        CalendarView.OnYearChangeListener, CalendarView.OnMonthChangeListener{
 
     TextView tvDate,mTextCurrentDay;
     private CalendarView mCalendarView;
 
     RelativeLayout mRelativeTool;
     CalendarLayout mCalendarLayout;
-    GroupRecyclerView mRecyclerView;
+//    private GroupRecyclerView mRecyclerView;
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, ComingActivity.class));
@@ -76,6 +76,12 @@ public class ComingActivity extends BaseActivity implements
 
         mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
         updateDate(mCalendarView.getCurYear(),mCalendarView.getCurMonth(),mCalendarView.getCurDay());
+
+//        mRecyclerView = findViewById(R.id.recyclerView);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        mRecyclerView.addItemDecoration(new GroupItemDecoration<String, Article>());
+//        mRecyclerView.setAdapter(new ArticleAdapter(this));
+//        mRecyclerView.notifyDataSetChanged();
     }
 
     @Override
@@ -85,44 +91,14 @@ public class ComingActivity extends BaseActivity implements
 
         Map<String, Calendar> map = new HashMap<>();
 
-        map.put(getSchemeCalendar(year, month, 9).toString(),
-                getSchemeCalendar(year, month, 9));
-        map.put(getSchemeCalendar(year, month, 10).toString(),
-                getSchemeCalendar(year, month, 10));
-        map.put(getSchemeCalendar(year, month, 11).toString(),
-                getSchemeCalendar(year, month, 11));
-        map.put(getSchemeCalendar(year, month, 20).toString(),
-                getSchemeCalendar(year, month, 20));
+        map.put(getSchemeCalendar(year, month, 9).toString(),getSchemeCalendar(year, month, 9));
+        map.put(getSchemeCalendar(year, month, 10).toString(),getSchemeCalendar(year, month, 10));
+        map.put(getSchemeCalendar(year, month, 11).toString(),getSchemeCalendar(year, month, 11));
+        map.put(getSchemeCalendar(year, month, 20).toString(),getSchemeCalendar(year, month, 20));
+        map.put(getSchemeCalendar(year, 6, 11).toString(),getSchemeCalendar(year, 6, 11));
 
-        map.put(getSchemeCalendar(year, 6, 11).toString(),
-                getSchemeCalendar(year, 6, 11));
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mCalendarView.setSchemeDate(map);
-
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new GroupItemDecoration<String, Article>());
-        mRecyclerView.setAdapter(new ArticleAdapter(this));
-        mRecyclerView.notifyDataSetChanged();
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_flyme:
-                CustomActivity.show(this);
-                break;
-            case R.id.ll_simple:
-                SimpleActivity.show(this);
-                break;
-            case R.id.ll_colorful:
-                ColorfulActivity.show(this);
-                break;
-            case R.id.ll_index:
-                IndexActivity.show(this);
-                break;
-        }
     }
 
     private Calendar getSchemeCalendar(int year, int month, int day) {
@@ -171,6 +147,7 @@ public class ComingActivity extends BaseActivity implements
     public void onCalendarOutOfRange(Calendar calendar) {
 
     }
+
 
     @SuppressLint("SetTextI18n")
     @Override

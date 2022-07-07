@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:ignore="RtlHardcoded,HardcodedText,RtlSymmetry,SmallSp">
 
-
     <RelativeLayout
         android:id="@+id/rl_tool"
         android:layout_width="match_parent"
@@ -99,19 +98,26 @@
             app:year_view_week_text_color="#e1e1e1"
             app:year_view_week_text_size="6sp" />
 
-        <com.haibin.calendarviewproject.group.GroupRecyclerView
-            android:id="@+id/recyclerView"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/content_background"
-            app:group_background="@color/content_background"
-            app:group_center="false"
-            app:group_has_header="false"
-            app:group_height="42dp"
-            app:group_padding_left="16dp"
-            app:group_padding_right="16dp"
-            app:group_text_color="#555555"
-            app:group_text_size="14sp" />
+            android:background="@color/content_background">
+
+
+        </FrameLayout>
+<!--        <com.haibin.calendarviewproject.group.GroupRecyclerView-->
+<!--            android:id="@+id/recyclerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            -->
+<!--            app:group_background="@color/content_background"-->
+<!--            app:group_center="false"-->
+<!--            app:group_has_header="false"-->
+<!--            app:group_height="42dp"-->
+<!--            app:group_padding_left="16dp"-->
+<!--            app:group_padding_right="16dp"-->
+<!--            app:group_text_color="#555555"-->
+<!--            app:group_text_size="14sp" />-->
 
     </com.haibin.calendarview.CalendarLayout>
 </LinearLayout>

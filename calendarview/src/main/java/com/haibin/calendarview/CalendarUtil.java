@@ -58,8 +58,7 @@ public final class CalendarUtil {
     public static int getMonthDaysCount(int year, int month) {
         int count = 0;
         //判断大月份
-        if (month == 1 || month == 3 || month == 5 || month == 7
-                || month == 8 || month == 10 || month == 12) {
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
             count = 31;
         }
 
@@ -744,8 +743,7 @@ public final class CalendarUtil {
         if (delegate.getDefaultCalendarSelectDay() != CalendarViewDelegate.FIRST_DAY_OF_MONTH) {
             int monthDays = getMonthDaysCount(calendar.getYear(), calendar.getMonth());
             Calendar indexCalendar = delegate.mIndexCalendar;
-            calendar.setDay(indexCalendar == null || indexCalendar.getDay() == 0 ? 1 :
-                    monthDays < indexCalendar.getDay() ? monthDays : indexCalendar.getDay());
+            calendar.setDay(indexCalendar == null || indexCalendar.getDay() == 0 ? 1 : monthDays < indexCalendar.getDay() ? monthDays : indexCalendar.getDay());
         } else {
             calendar.setDay(1);
         }

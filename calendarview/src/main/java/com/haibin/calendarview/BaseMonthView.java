@@ -17,6 +17,7 @@ package com.haibin.calendarview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
 /**
  * 月视图基础控件,可自由继承实现
@@ -69,7 +70,7 @@ public abstract class BaseMonthView extends BaseView {
         mMonth = month;
         initCalendar();
         mHeight = CalendarUtil.getMonthViewHeight(year, month, mItemHeight, mDelegate.getWeekStart(),mDelegate.getMonthViewShowMode());
-
+//        Log.i("ansen"," 当前年:"+year+" 当前月:"+month+" item高度:"+mItemHeight+" 总高度:"+mHeight);
     }
 
     /**
@@ -77,7 +78,6 @@ public abstract class BaseMonthView extends BaseView {
      */
     @SuppressLint("WrongConstant")
     private void initCalendar() {
-
         mNextDiff = CalendarUtil.getMonthEndDiff(mYear, mMonth, mDelegate.getWeekStart());
         int preDiff = CalendarUtil.getMonthViewStartDiff(mYear, mMonth, mDelegate.getWeekStart());
         int monthDayCount = CalendarUtil.getMonthDaysCount(mYear, mMonth);
@@ -197,8 +197,9 @@ public abstract class BaseMonthView extends BaseView {
     @Override
     public void updateItemHeight() {
         super.updateItemHeight();
-        mHeight = CalendarUtil.getMonthViewHeight(mYear, mMonth, mItemHeight, mDelegate.getWeekStart(),
-                mDelegate.getMonthViewShowMode());
+        mHeight = CalendarUtil.getMonthViewHeight(mYear, mMonth, mItemHeight, mDelegate.getWeekStart(),mDelegate.getMonthViewShowMode());
+
+        Log.i("ansen","BaseMonthView updateItemHeight 获取Item高度:"+mItemHeight+" 总高度:"+mHeight);
     }
 
 

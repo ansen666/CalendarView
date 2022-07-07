@@ -17,10 +17,12 @@ package com.haibin.calendarview;
 
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -235,8 +237,8 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         this.mDelegate = delegate;
         mWeekStartWidth = mDelegate.getWeekStart();
         updateStyle();
+        Log.i("ansen","BaseView setup");
         updateItemHeight();
-
         initPaint();
     }
 
@@ -275,8 +277,18 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     public void updateItemHeight() {
         this.mItemHeight = mDelegate.getCalendarItemHeight();
+//        this.mItemHeight = (getWidthPixels() - getCalendarPaddingLeft() - getCalendarPaddingRight()) / 7;
+//        this.mItemHeight = (getWidthPixels() - 30 - getCalendarPaddingRight()) / 7;
+
+//        Log.i("ansen","BaseView updateItemHeight 获取Item高度:"+mItemHeight+" getCalendarPaddingLeft():"+getCalendarPaddingLeft()+" getCalendarPaddingRight():"+getCalendarPaddingRight());
+
+//        Log.i("ansen","updateItemHeight 获取Item高度:"+mItemHeight+" 宽度:"+getWidth());
         Paint.FontMetrics metrics = mCurMonthTextPaint.getFontMetrics();
         mTextBaseLine = mItemHeight / 2 - metrics.descent + (metrics.bottom - metrics.top) / 2;
+    }
+
+    public static int getWidthPixels() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
 
     /**
@@ -421,6 +433,9 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         return mDelegate != null ? mDelegate.getCalendarPaddingRight() : 0;
     }
 
+    protected int getMonthViewShowMode(){
+        return mDelegate != null ? mDelegate.getMonthViewShowMode() : 0;
+    }
 
     /**
      * 初始化画笔相关

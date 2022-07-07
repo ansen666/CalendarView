@@ -11,9 +11,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.haibin.calendarview.Calendar;
+import com.haibin.calendarview.CalendarUtil;
 import com.haibin.calendarview.MonthView;
 import com.haibin.calendarviewproject.R;
 import com.haibin.calendarviewproject.util.Constant;
+import com.haibin.calendarviewproject.util.DisplayHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +66,6 @@ public class ComingMonthView extends MonthView {
         mTextPaint.setAntiAlias(true);
         mTextPaint.setFakeBoldText(true);
 
-
-
         mCurrentDayPaint.setAntiAlias(true);
         mCurrentDayPaint.setStyle(Paint.Style.FILL);
         mCurrentDayPaint.setColor(0xFFeaeaea);
@@ -80,38 +80,36 @@ public class ComingMonthView extends MonthView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mItemHeight = (getWidth() - getCalendarPaddingLeft() - getCalendarPaddingRight()) / 7;
+//        mItemHeight = (getWidth() - getCalendarPaddingLeft() - getCalendarPaddingRight()) / 7;
+//        Log.i("ansen","重新获取Item高度:"+mItemHeight);
+//        Log.i("ansen","控件宽度:"+ DisplayHelper.getWidthPixels());
         super.onDraw(canvas);
     }
 
+
+//    @Override
+//    public void updateItemHeight() {
+////        super.updateItemHeight();
+//        this.mItemHeight = (DisplayHelper.getWidthPixels() - getCalendarPaddingLeft() - getCalendarPaddingRight()) / 7;
+//        Paint.FontMetrics metrics = mCurMonthTextPaint.getFontMetrics();
+//        mTextBaseLine = mItemHeight / 2 - metrics.descent + (metrics.bottom - metrics.top) / 2;
+//        mHeight = CalendarUtil.getMonthViewHeight(mYear, mMonth, mItemHeight, getWeekStartWith(),getMonthViewShowMode());
+//        Log.i("ansen","ComingMonthView updateItemHeight 获取Item高度:"+mItemHeight+" 总高度:"+mHeight);
+//    }
+
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme) {
-//        if(hasScheme){
-//            List<Calendar.Scheme> schemes = calendar.getSchemes();
-//            for(int i=0;i<schemes.size();i++){
-//                Calendar.Scheme scheme=schemes.get(i);
-//
-//                if(scheme.getType() == Constant.CalendarShowType.START
-//                        ||scheme.getType() == Constant.CalendarShowType.END || scheme.getType() == Constant.CalendarShowType.AUNT){//开始大姨妈
-//                    Log.i("ansen","画矩形 onDrawScheme x:"+x+" y:"+y);
-
-//                }
-//            }
-//        }
-
         return true;
     }
 
     @Override
     protected void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y) {
-
     }
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     @Override
     protected void onDrawText(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelected) {
         canvas.drawLine(x, y+mItemHeight, x + mItemWidth, y + mItemHeight-itemPadding, splitPaint);
-
         int cx = x + mItemWidth / 2;
         int cy = y + mItemHeight / 2;
         int top = y - mItemHeight / 6;
@@ -126,14 +124,13 @@ public class ComingMonthView extends MonthView {
         if(hasScheme){//
             drawScheme(canvas,calendar,x,y,isSelected);
         }
-
-
+//        Log.i("ansen","onDrawText 年:"+calendar.getYear()+" 月:"+calendar.getMonth()+" 日:"+calendar.getDay());
         canvas.drawText(String.valueOf(calendar.getDay()), cx, y + paintheight/2 + mItemHeight/2,mTextPaint);
     }
 
     private void drawScheme(Canvas canvas, Calendar calendar, int x, int y, boolean isSelected){
         List<Calendar.Scheme> schemes = calendar.getSchemes();
-        Log.i("ansen","画矩形 onDrawScheme x:"+x+" y:"+y);
+//        Log.i("ansen","画矩形 onDrawScheme x:"+x+" y:"+y);
 
         List<Integer> topList=new ArrayList<>();
         List<Integer> bottomList=new ArrayList<>();

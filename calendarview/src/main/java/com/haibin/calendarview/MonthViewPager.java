@@ -18,6 +18,7 @@ package com.haibin.calendarview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,15 +96,9 @@ public final class MonthViewPager extends ViewPager {
                 }
                 int height;
                 if (position < getCurrentItem()) {//右滑-1
-                    height = (int) ((mPreViewHeight)
-                            * (1 - positionOffset) +
-                            mCurrentViewHeight
-                                    * positionOffset);
+                    height = (int) ((mPreViewHeight)  * (1 - positionOffset) + mCurrentViewHeight   * positionOffset);
                 } else {//左滑+！
-                    height = (int) ((mCurrentViewHeight)
-                            * (1 - positionOffset) +
-                            (mNextViewHeight)
-                                    * positionOffset);
+                    height = (int) ((mCurrentViewHeight)  * (1 - positionOffset) + (mNextViewHeight)   * positionOffset);
                 }
                 ViewGroup.LayoutParams params = getLayoutParams();
                 params.height = height;
@@ -132,8 +127,6 @@ public final class MonthViewPager extends ViewPager {
                     updateMonthViewHeight(calendar.getYear(), calendar.getMonth());
                     return;
                 }
-
-
                 if (mDelegate.getSelectMode() == CalendarViewDelegate.SELECT_MODE_DEFAULT) {
                     if (!calendar.isCurrentMonth()) {
                         mDelegate.mSelectedCalendar = calendar;
@@ -493,6 +486,7 @@ public final class MonthViewPager extends ViewPager {
         for (int i = 0; i < getChildCount(); i++) {
             BaseMonthView view = (BaseMonthView) getChildAt(i);
             view.updateItemHeight();
+//            Log.i("ansen","MonthViewPagere view"+view);
             view.requestLayout();
         }
 
@@ -641,6 +635,4 @@ public final class MonthViewPager extends ViewPager {
             container.removeView(view);
         }
     }
-
-
 }

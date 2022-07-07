@@ -20,6 +20,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -430,6 +431,8 @@ final class CalendarViewDelegate {
             mCalendarPaddingLeft = mCalendarPadding;
             mCalendarPaddingRight = mCalendarPadding;
         }
+
+        Log.i("ansen","左边padding mCalendarPaddingLeft:"+mCalendarPaddingLeft);
 
         mSchemeTextColor = array.getColor(R.styleable.CalendarView_scheme_text_color, 0xFFFFFFFF);
         mSchemeLunarTextColor = array.getColor(R.styleable.CalendarView_scheme_lunar_text_color, 0xFFe1e1e1);
@@ -974,6 +977,8 @@ final class CalendarViewDelegate {
         this.mCalendarPadding = mCalendarPadding;
         mCalendarPaddingLeft = mCalendarPadding;
         mCalendarPaddingRight = mCalendarPadding;
+
+        Log.i("ansen","设置左边padding setCalendarPadding:"+mCalendarPadding);
     }
 
     int getCalendarPaddingLeft() {
@@ -982,6 +987,8 @@ final class CalendarViewDelegate {
 
     void setCalendarPaddingLeft(int mCalendarPaddingLeft) {
         this.mCalendarPaddingLeft = mCalendarPaddingLeft;
+
+        Log.i("ansen","设置左边padding setCalendarPaddingLeft:"+mCalendarPaddingLeft);
     }
 
     int getCalendarPaddingRight() {

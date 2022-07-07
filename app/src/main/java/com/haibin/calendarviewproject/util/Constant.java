@@ -24,4 +24,13 @@ public class Constant {
         public static final int FORESEE_AUNT=12;//推送大姨妈
         public static final int OVULATION_DAY=13;//排卵日
     }
+
+    //大姨妈类型
+    public static class MenstruationType{
+        public static final int TYPE_NONE= 0;//正常情况
+        public static final int SAFETY_PERIOD = 1;//安全期：受孕几率较小
+        public static final int PERIOD_OVULATION = 2;//排卵期：排卵日及其前5天和后4天为排卵期，此时间段受孕的可能性较大
+        public static final int MENSTRUAL_PERIOD = 3;//月经期：请注意经期卫生
+        public static final int OVULATION = 4;//排卵日
+    }
 }

@@ -16,6 +16,7 @@
 package com.haibin.calendarview;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * 最基础周视图，因为日历UI采用热插拔实现，所以这里必须继承实现，达到UI一致即可
@@ -261,6 +262,7 @@ public abstract class BaseWeekView extends BaseView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(mItemHeight, MeasureSpec.EXACTLY);
+        Log.i("ansen","onMeasure 测量高度:"+heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
