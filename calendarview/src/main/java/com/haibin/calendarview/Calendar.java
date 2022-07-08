@@ -121,6 +121,15 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
      */
     private Calendar lunarCalendar;
 
+    public Calendar() {
+    }
+
+    public Calendar(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
     public int getYear() {
         return year;
     }

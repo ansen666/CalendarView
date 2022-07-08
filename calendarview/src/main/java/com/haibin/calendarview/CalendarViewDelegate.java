@@ -379,6 +379,11 @@ final class CalendarViewDelegate {
     CalendarView.OnMonthChangeListener mMonthChangeListener;
 
     /**
+     * 下个月份切换事件
+     */
+    CalendarView.OnMonthChangeListener mNextMonthChangeListener;
+
+    /**
      * 周视图改变事件
      */
     CalendarView.OnWeekChangeListener mWeekChangeListener;
@@ -418,6 +423,8 @@ final class CalendarViewDelegate {
 
     private int mMinSelectRange, mMaxSelectRange;
 
+    private boolean isLeft=false;//滑动方向
+
     CalendarViewDelegate(Context context, @Nullable AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CalendarView);
 
@@ -432,7 +439,7 @@ final class CalendarViewDelegate {
             mCalendarPaddingRight = mCalendarPadding;
         }
 
-        Log.i("ansen","左边padding mCalendarPaddingLeft:"+mCalendarPaddingLeft);
+//        Log.i("ansen","左边padding mCalendarPaddingLeft:"+mCalendarPaddingLeft);
 
         mSchemeTextColor = array.getColor(R.styleable.CalendarView_scheme_text_color, 0xFFFFFFFF);
         mSchemeLunarTextColor = array.getColor(R.styleable.CalendarView_scheme_lunar_text_color, 0xFFe1e1e1);
@@ -978,7 +985,7 @@ final class CalendarViewDelegate {
         mCalendarPaddingLeft = mCalendarPadding;
         mCalendarPaddingRight = mCalendarPadding;
 
-        Log.i("ansen","设置左边padding setCalendarPadding:"+mCalendarPadding);
+//        Log.i("ansen","设置左边padding setCalendarPadding:"+mCalendarPadding);
     }
 
     int getCalendarPaddingLeft() {
@@ -988,7 +995,7 @@ final class CalendarViewDelegate {
     void setCalendarPaddingLeft(int mCalendarPaddingLeft) {
         this.mCalendarPaddingLeft = mCalendarPaddingLeft;
 
-        Log.i("ansen","设置左边padding setCalendarPaddingLeft:"+mCalendarPaddingLeft);
+//        Log.i("ansen","设置左边padding setCalendarPaddingLeft:"+mCalendarPaddingLeft);
     }
 
     int getCalendarPaddingRight() {
@@ -1192,5 +1199,13 @@ final class CalendarViewDelegate {
         }
         addSchemesFromMap(calendars);
         return calendars;
+    }
+
+    public boolean isLeft() {
+        return isLeft;
+    }
+
+    public void setLeft(boolean left) {
+        isLeft = left;
     }
 }

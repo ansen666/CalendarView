@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
+
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
 import com.haibin.calendarviewproject.R;
@@ -77,6 +79,7 @@ public class ComingMonthView extends MonthView {
 
     @Override
     protected void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y) {
+
     }
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
@@ -97,7 +100,7 @@ public class ComingMonthView extends MonthView {
         if(hasScheme){//
             drawScheme(canvas,calendar,x,y,isSelected);
         }
-//        Log.i("ansen","onDrawText 年:"+calendar.getYear()+" 月:"+calendar.getMonth()+" 日:"+calendar.getDay());
+        Log.i("ansen","onDrawText 年:"+calendar.getYear()+" 月:"+calendar.getMonth()+" 日:"+calendar.getDay());
         canvas.drawText(String.valueOf(calendar.getDay()), cx, y + paintheight/2 + mItemHeight/2,mTextPaint);
     }
 

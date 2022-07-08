@@ -35,19 +35,12 @@ import java.util.List;
  * 月份切换ViewPager，自定义适应高度
  */
 public final class MonthViewPager extends ViewPager {
-
     private boolean isUpdateMonthView;
-
     private int mMonthCount;
-
     private CalendarViewDelegate mDelegate;
-
     private int mNextViewHeight, mPreViewHeight, mCurrentViewHeight;
-
     CalendarLayout mParentLayout;
-
     WeekViewPager mWeekPager;
-
     WeekBar mWeekBar;
 
     /**
@@ -71,8 +64,7 @@ public final class MonthViewPager extends ViewPager {
     void setup(CalendarViewDelegate delegate) {
         this.mDelegate = delegate;
 
-        updateMonthViewHeight(mDelegate.getCurrentDay().getYear(),
-                mDelegate.getCurrentDay().getMonth());
+        updateMonthViewHeight(mDelegate.getCurrentDay().getYear(),mDelegate.getCurrentDay().getMonth());
 
         ViewGroup.LayoutParams params = getLayoutParams();
         params.height = mCurrentViewHeight;
@@ -84,10 +76,9 @@ public final class MonthViewPager extends ViewPager {
      * 初始化
      */
     private void init() {
-        mMonthCount = 12 * (mDelegate.getMaxYear() - mDelegate.getMinYear())
-                - mDelegate.getMinYearMonth() + 1 +
-                mDelegate.getMaxYearMonth();
+        mMonthCount = 12 * (mDelegate.getMaxYear() - mDelegate.getMinYear()) - mDelegate.getMinYearMonth() + 1 + mDelegate.getMaxYearMonth();
         setAdapter(new MonthViewPagerAdapter());
+
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -96,8 +87,10 @@ public final class MonthViewPager extends ViewPager {
                 }
                 int height;
                 if (position < getCurrentItem()) {//右滑-1
+                    mDelegate.setLeft(false);
                     height = (int) ((mPreViewHeight)  * (1 - positionOffset) + mCurrentViewHeight   * positionOffset);
                 } else {//左滑+！
+                    mDelegate.setLeft(true);
                     height = (int) ((mCurrentViewHeight)  * (1 - positionOffset) + (mNextViewHeight)   * positionOffset);
                 }
                 ViewGroup.LayoutParams params = getLayoutParams();
@@ -121,6 +114,14 @@ public final class MonthViewPager extends ViewPager {
                 //月份改变事件
                 if (mDelegate.mMonthChangeListener != null) {
                     mDelegate.mMonthChangeListener.onMonthChange(calendar.getYear(), calendar.getMonth());
+                }
+
+                if(mDelegate.mNextMonthChangeListener!=null){
+                    int nextPosition=mDelegate.isLeft()?position+1:position-1;
+                    int year = (nextPosition + mDelegate.getMinYearMonth() - 1) / 12 + mDelegate.getMinYear();
+                    int nextMonth = (nextPosition + mDelegate.getMinYearMonth() - 1) % 12 + 1;
+//                    Log.i("ansen","MonthViewPager 年:"+year+" 下个月:"+nextMonth);
+                    mDelegate.mNextMonthChangeListener.onMonthChange(year,nextMonth);
                 }
 
                 //周视图显示的时候就需要动态改变月视图高度
@@ -231,10 +232,9 @@ public final class MonthViewPager extends ViewPager {
      * 刷新
      */
     void notifyDataSetChanged() {
-        mMonthCount = 12 * (mDelegate.getMaxYear() - mDelegate.getMinYear())
-                - mDelegate.getMinYearMonth() + 1 +
-                mDelegate.getMaxYearMonth();
+        mMonthCount = 12 * (mDelegate.getMaxYear() - mDelegate.getMinYear())  - mDelegate.getMinYearMonth() + 1 + mDelegate.getMaxYearMonth();
         notifyAdapterDataSetChanged();
+        Log.i("ansen","刷新:notifyDataSetChanged");
     }
 
     /**
@@ -244,6 +244,7 @@ public final class MonthViewPager extends ViewPager {
         isUpdateMonthView = true;
         notifyAdapterDataSetChanged();
         isUpdateMonthView = false;
+        Log.i("ansen","刷新:updateMonthViewClass");
     }
 
     /**
@@ -558,6 +559,7 @@ public final class MonthViewPager extends ViewPager {
         if (getAdapter() == null) {
             return;
         }
+        Log.i("ansen","刷新:notifyAdapterDataSetChanged");
         getAdapter().notifyDataSetChanged();
     }
 
@@ -609,8 +611,10 @@ public final class MonthViewPager extends ViewPager {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
+//            Log.i("ansen","MonthViewPager getMinYearMonth:"+mDelegate.getMinYearMonth()+" position:"+position);
             int year = (position + mDelegate.getMinYearMonth() - 1) / 12 + mDelegate.getMinYear();
             int month = (position + mDelegate.getMinYearMonth() - 1) % 12 + 1;
+            Log.i("ansen","MonthViewPager  instantiateItem year:"+year+" month:"+month);
             BaseMonthView view;
             try {
                 Constructor constructor = mDelegate.getMonthViewClass().getConstructor(Context.class);
@@ -619,6 +623,7 @@ public final class MonthViewPager extends ViewPager {
                 e.printStackTrace();
                 return new DefaultMonthView(getContext());
             }
+
             view.mMonthViewPager = MonthViewPager.this;
             view.mParentLayout = mParentLayout;
             view.setup(mDelegate);

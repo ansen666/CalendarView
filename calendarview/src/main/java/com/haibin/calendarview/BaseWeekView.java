@@ -262,7 +262,7 @@ public abstract class BaseWeekView extends BaseView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(mItemHeight, MeasureSpec.EXACTLY);
-        Log.i("ansen","onMeasure 测量高度:"+heightMeasureSpec);
+//        Log.i("ansen","onMeasure 测量高度:"+heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 

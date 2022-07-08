@@ -76,7 +76,11 @@ public final class WeekViewPager extends ViewPager {
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                if (position < getCurrentItem()) {//右滑-1
+                    mDelegate.setLeft(false);
+                } else {//左滑+！
+                    mDelegate.setLeft(true);
+                }
             }
 
             @Override

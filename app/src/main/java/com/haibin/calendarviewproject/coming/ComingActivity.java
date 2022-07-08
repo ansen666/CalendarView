@@ -12,19 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
-import com.haibin.calendarview.CalendarUtil;
 import com.haibin.calendarview.CalendarView;
 import com.haibin.calendarviewproject.Article;
 import com.haibin.calendarviewproject.ArticleAdapter;
 import com.haibin.calendarviewproject.R;
 import com.haibin.calendarviewproject.base.activity.BaseActivity;
-import com.haibin.calendarviewproject.colorful.ColorfulActivity;
-import com.haibin.calendarviewproject.custom.CustomActivity;
 import com.haibin.calendarviewproject.group.GroupItemDecoration;
 import com.haibin.calendarviewproject.group.GroupRecyclerView;
-import com.haibin.calendarviewproject.index.IndexActivity;
-import com.haibin.calendarviewproject.simple.SimpleActivity;
+import com.haibin.calendarviewproject.util.AuntUtil;
 import com.haibin.calendarviewproject.util.Constant;
+import com.haibin.calendarviewproject.util.MLog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +39,9 @@ public class ComingActivity extends BaseActivity implements
 
     RelativeLayout mRelativeTool;
     CalendarLayout mCalendarLayout;
-//    private GroupRecyclerView mRecyclerView;
+    private GroupRecyclerView mRecyclerView;
+
+    private Map<String, Calendar> map = new HashMap<>();
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, ComingActivity.class));
@@ -73,33 +72,41 @@ public class ComingActivity extends BaseActivity implements
         mCalendarView.setOnCalendarSelectListener(this);
         mCalendarView.setOnYearChangeListener(this);
         mCalendarView.setOnMonthChangeListener(this);
+        mCalendarView.setOnNextMonthChangeListener(onNextMonthChangeListener);
 
         mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
         updateDate(mCalendarView.getCurYear(),mCalendarView.getCurMonth(),mCalendarView.getCurDay());
 
-//        mRecyclerView = findViewById(R.id.recyclerView);
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        mRecyclerView.addItemDecoration(new GroupItemDecoration<String, Article>());
-//        mRecyclerView.setAdapter(new ArticleAdapter(this));
-//        mRecyclerView.notifyDataSetChanged();
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new GroupItemDecoration<String, Article>());
+        mRecyclerView.setAdapter(new ArticleAdapter(this));
+        mRecyclerView.notifyDataSetChanged();
+
+        showAunt(mCalendarView.getCurYear(),mCalendarView.getCurMonth());
     }
 
     @Override
     protected void initData() {
-        int year = mCalendarView.getCurYear();
-        int month = mCalendarView.getCurMonth();
 
-        Map<String, Calendar> map = new HashMap<>();
-
-        map.put(getSchemeCalendar(year, month, 9).toString(),getSchemeCalendar(year, month, 9));
-        map.put(getSchemeCalendar(year, month, 10).toString(),getSchemeCalendar(year, month, 10));
-        map.put(getSchemeCalendar(year, month, 11).toString(),getSchemeCalendar(year, month, 11));
-        map.put(getSchemeCalendar(year, month, 20).toString(),getSchemeCalendar(year, month, 20));
-        map.put(getSchemeCalendar(year, 6, 11).toString(),getSchemeCalendar(year, 6, 11));
-
-        //此方法在巨大的数据量上不影响遍历性能，推荐使用
-        mCalendarView.setSchemeDate(map);
     }
+
+//    @Override
+//    protected void initData() {
+//        int year = mCalendarView.getCurYear();
+//        int month = mCalendarView.getCurMonth();
+//
+//        Map<String, Calendar> map = new HashMap<>();
+//
+//        map.put(getSchemeCalendar(year, month, 9).toString(),getSchemeCalendar(year, month, 9));
+//        map.put(getSchemeCalendar(year, month, 10).toString(),getSchemeCalendar(year, month, 10));
+//        map.put(getSchemeCalendar(year, month, 11).toString(),getSchemeCalendar(year, month, 11));
+//        map.put(getSchemeCalendar(year, month, 20).toString(),getSchemeCalendar(year, month, 20));
+//        map.put(getSchemeCalendar(year, 6, 11).toString(),getSchemeCalendar(year, 6, 11));
+//
+//        //此方法在巨大的数据量上不影响遍历性能，推荐使用
+//        mCalendarView.setSchemeDate(map);
+//    }
 
     private Calendar getSchemeCalendar(int year, int month, int day) {
         Calendar calendar = new Calendar();
@@ -166,6 +173,14 @@ public class ComingActivity extends BaseActivity implements
 //        tvDate.setText(mCalendarView.getCurYear()+"年"+mCalendarView.getCurMonth()+"月"+mCalendarView.getCurDay()+"日");
     }
 
+    private CalendarView.OnMonthChangeListener onNextMonthChangeListener=new CalendarView.OnMonthChangeListener() {
+        @Override
+        public void onMonthChange(int year, int month) {
+            MLog.i("year:"+year+" 下个月 month:"+month);
+            showAunt(year,month);
+        }
+    };
+
     @Override
     public void onMonthChange(int year, int month) {
         Log.i("ansen","onMonthChange year:"+year+" month:"+month);
@@ -173,5 +188,21 @@ public class ComingActivity extends BaseActivity implements
 
     private void updateDate(int year, int month, int day){
         tvDate.setText(year+"年"+month+"月"+day+"日");
+    }
+
+    public void showAunt(int year,int month){
+        int[] days=AuntUtil.calculationAunt(year,month);
+
+        boolean start=false;
+        for(int i=0;i<days.length;i++){
+            int type=days[i];
+            Calendar calendar = new Calendar(year,month,i+1);
+            if(type==Constant.CalendarShowType.AUNT){//大姨妈
+                calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.AUNT));
+                map.put(calendar.toString(),calendar);
+            }
+        }
+        //此方法在巨大的数据量上不影响遍历性能，推荐使用
+        mCalendarView.setSchemeDate(map);
     }
 }

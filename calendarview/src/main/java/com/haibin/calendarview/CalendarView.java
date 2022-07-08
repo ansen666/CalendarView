@@ -869,6 +869,14 @@ public class CalendarView extends FrameLayout {
         this.mDelegate.mMonthChangeListener = listener;
     }
 
+    /**
+     * 预加载下一月
+     * @param listener listener
+     */
+    public void setOnNextMonthChangeListener(OnMonthChangeListener listener) {
+        this.mDelegate.mNextMonthChangeListener = listener;
+    }
+
 
     /**
      * 周视图切换监听
@@ -1906,7 +1914,6 @@ public class CalendarView extends FrameLayout {
          * @param adjacentCalendar 相邻的日历日期
          * @param obj              此处的对象，自行设置
          */
-        void onClickCalendarPadding(float x, float y, boolean isMonthView,
-                                    Calendar adjacentCalendar, Object obj);
+        void onClickCalendarPadding(float x, float y, boolean isMonthView,Calendar adjacentCalendar, Object obj);
     }
 }
