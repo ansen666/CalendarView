@@ -36,7 +36,6 @@ import java.util.List;
  */
 
 public abstract class BaseView extends View implements View.OnClickListener, View.OnLongClickListener {
-
     CalendarViewDelegate mDelegate;
 
     /**
@@ -237,7 +236,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         this.mDelegate = delegate;
         mWeekStartWidth = mDelegate.getWeekStart();
         updateStyle();
-        Log.i("ansen","BaseView setup");
+//        Log.i("ansen","BaseView setup");
         updateItemHeight();
         initPaint();
     }
@@ -277,18 +276,8 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     public void updateItemHeight() {
         this.mItemHeight = mDelegate.getCalendarItemHeight();
-//        this.mItemHeight = (getWidthPixels() - getCalendarPaddingLeft() - getCalendarPaddingRight()) / 7;
-//        this.mItemHeight = (getWidthPixels() - 30 - getCalendarPaddingRight()) / 7;
-
-//        Log.i("ansen","BaseView updateItemHeight 获取Item高度:"+mItemHeight+" getCalendarPaddingLeft():"+getCalendarPaddingLeft()+" getCalendarPaddingRight():"+getCalendarPaddingRight());
-
-//        Log.i("ansen","updateItemHeight 获取Item高度:"+mItemHeight+" 宽度:"+getWidth());
         Paint.FontMetrics metrics = mCurMonthTextPaint.getFontMetrics();
         mTextBaseLine = mItemHeight / 2 - metrics.descent + (metrics.bottom - metrics.top) / 2;
-    }
-
-    public static int getWidthPixels() {
-        return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
 
     /**

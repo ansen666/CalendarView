@@ -4,19 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.haibin.calendarview.Calendar;
-import com.haibin.calendarview.CalendarUtil;
 import com.haibin.calendarview.MonthView;
 import com.haibin.calendarviewproject.R;
 import com.haibin.calendarviewproject.util.Constant;
-import com.haibin.calendarviewproject.util.DisplayHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,26 +69,6 @@ public class ComingMonthView extends MonthView {
         corners=dipToPx(context, 5);
         insideCorners=dipToPx(context, 4);
     }
-
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-//        mItemHeight = (getWidth() - getCalendarPaddingLeft() - getCalendarPaddingRight()) / 7;
-//        Log.i("ansen","重新获取Item高度:"+mItemHeight);
-//        Log.i("ansen","控件宽度:"+ DisplayHelper.getWidthPixels());
-        super.onDraw(canvas);
-    }
-
-
-//    @Override
-//    public void updateItemHeight() {
-////        super.updateItemHeight();
-//        this.mItemHeight = (DisplayHelper.getWidthPixels() - getCalendarPaddingLeft() - getCalendarPaddingRight()) / 7;
-//        Paint.FontMetrics metrics = mCurMonthTextPaint.getFontMetrics();
-//        mTextBaseLine = mItemHeight / 2 - metrics.descent + (metrics.bottom - metrics.top) / 2;
-//        mHeight = CalendarUtil.getMonthViewHeight(mYear, mMonth, mItemHeight, getWeekStartWith(),getMonthViewShowMode());
-//        Log.i("ansen","ComingMonthView updateItemHeight 获取Item高度:"+mItemHeight+" 总高度:"+mHeight);
-//    }
 
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme) {
@@ -193,7 +166,7 @@ public class ComingMonthView extends MonthView {
             }else if(i==2){
                 xLocation = xLocation + bitmap.getWidth() + dipToPx(getContext(), 1);
             }
-            canvas.drawBitmap(bitmap,xLocation-bitmap.getWidth()/2,y+mTextBaseLine-dipToPx(getContext(), 2),mTextPaint);
+            canvas.drawBitmap(bitmap,xLocation-bitmap.getWidth()/2,y+mTextBaseLine+bitmap.getHeight()/2-dipToPx(getContext(), 1),mTextPaint);
         }
     }
 

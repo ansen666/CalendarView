@@ -199,7 +199,7 @@ public abstract class BaseMonthView extends BaseView {
         super.updateItemHeight();
         mHeight = CalendarUtil.getMonthViewHeight(mYear, mMonth, mItemHeight, mDelegate.getWeekStart(),mDelegate.getMonthViewShowMode());
 
-        Log.i("ansen","BaseMonthView updateItemHeight 获取Item高度:"+mItemHeight+" 总高度:"+mHeight);
+//        Log.i("ansen","BaseMonthView updateItemHeight 获取Item高度:"+mItemHeight+" 总高度:"+mHeight);
     }
 
 

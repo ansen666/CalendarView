@@ -117,6 +117,7 @@ public final class MonthViewPager extends ViewPager {
                     }
                     mDelegate.mIndexCalendar = calendar;
                 }
+
                 //月份改变事件
                 if (mDelegate.mMonthChangeListener != null) {
                     mDelegate.mMonthChangeListener.onMonthChange(calendar.getYear(), calendar.getMonth());
