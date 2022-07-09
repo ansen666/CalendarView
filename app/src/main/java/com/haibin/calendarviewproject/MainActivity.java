@@ -484,7 +484,6 @@ public class MainActivity extends BaseActivity implements
         mTextMonthDay.setText(String.valueOf(year));
         Log.e("onYearChange", " 年份变化 " + year);
     }
-
 }
 
 

@@ -35,43 +35,17 @@ import java.util.Map;
  * 代码量多，但是不影响阅读性
  */
 final class CalendarViewDelegate {
+    static final int WEEK_START_WITH_SUN = 1;//周起始：周日
+    static final int WEEK_START_WITH_MON = 2;//周起始：周一
+    static final int WEEK_START_WITH_SAT = 7;//周起始：周六
 
-    /**
-     * 周起始：周日
-     */
-    static final int WEEK_START_WITH_SUN = 1;
-
-    /**
-     * 周起始：周一
-     */
-    static final int WEEK_START_WITH_MON = 2;
-
-    /**
-     * 周起始：周六
-     */
-    static final int WEEK_START_WITH_SAT = 7;
-
-    /**
-     * 默认选择日期1号first_day_of_month
-     */
-    static final int FIRST_DAY_OF_MONTH = 0;
-
-    /**
-     * 跟随上个月last_select_day
-     */
-    static final int LAST_MONTH_VIEW_SELECT_DAY = 1;
-
-    /**
-     * 跟随上个月last_select_day_ignore_current忽视今天
-     */
-    static final int LAST_MONTH_VIEW_SELECT_DAY_IGNORE_CURRENT = 2;
+    static final int FIRST_DAY_OF_MONTH = 0;// 默认选择日期1号first_day_of_month
+    static final int LAST_MONTH_VIEW_SELECT_DAY = 1;//跟随上个月last_select_day
+    static final int LAST_MONTH_VIEW_SELECT_DAY_IGNORE_CURRENT = 2;//跟随上个月last_select_day_ignore_current忽视今天
 
     private int mDefaultCalendarSelectDay;
 
-    /**
-     * 周起始
-     */
-    private int mWeekStart;
+    private int mWeekStart;//周起始
 
     /**
      * 全部显示

@@ -12,6 +12,8 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
 import com.haibin.calendarviewproject.R;
 import com.haibin.calendarviewproject.util.Constant;
+import com.haibin.calendarviewproject.util.MLog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +61,7 @@ public class ComingMonthView extends MonthView {
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setColor(0xffffffff);
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setFakeBoldText(true);
+//        mTextPaint.setFakeBoldText(true);
 
         mCurrentDayPaint.setAntiAlias(true);
         mCurrentDayPaint.setStyle(Paint.Style.FILL);
@@ -90,23 +92,31 @@ public class ComingMonthView extends MonthView {
         int cy = y + mItemHeight / 2;
         int top = y - mItemHeight / 6;
 
-        mTextPaint.setColor(getResources().getColor(R.color.pregnant_up));
+//        Log.i("ansen","onDrawText 年:"+calendar.getYear()+" 月:"+calendar.getMonth()+" 日:"+calendar.getDay()+" color:"+calendar.getSchemeColor()+" hasScheme:"+hasScheme);
+
+        if(calendar.getSchemeColor()!=0){
+            mTextPaint.setColor(getResources().getColor(calendar.getSchemeColor()));
+        }
 
         if(isSelected){
             RectF rectStroke = new RectF(x+itemPadding*2, y+itemPadding*2, x + mItemWidth - itemPadding*2, y + mItemHeight -itemPadding*2);
             canvas.drawRoundRect(rectStroke, corners, corners, auntPaintStroke);
         }
 
-        if(hasScheme){//
+        if(hasScheme ){//
             drawScheme(canvas,calendar,x,y,isSelected);
         }
-        Log.i("ansen","onDrawText 年:"+calendar.getYear()+" 月:"+calendar.getMonth()+" 日:"+calendar.getDay());
+//        Log.i("ansen","onDrawText 年:"+calendar.getYear()+" 月:"+calendar.getMonth()+" 日:"+calendar.getDay());
         canvas.drawText(String.valueOf(calendar.getDay()), cx, y + paintheight/2 + mItemHeight/2,mTextPaint);
     }
 
     private void drawScheme(Canvas canvas, Calendar calendar, int x, int y, boolean isSelected){
         List<Calendar.Scheme> schemes = calendar.getSchemes();
-//        Log.i("ansen","画矩形 onDrawScheme x:"+x+" y:"+y);
+        if(schemes==null||schemes.size()==0){
+            return ;
+        }
+
+//        MLog.i("画矩形 onDrawScheme x:"+x+" y:"+y);
 
         List<Integer> topList=new ArrayList<>();
         List<Integer> bottomList=new ArrayList<>();
@@ -114,8 +124,13 @@ public class ComingMonthView extends MonthView {
         for(int i=0;i<schemes.size();i++){
             Calendar.Scheme scheme=schemes.get(i);
 
-            if(scheme.getType() == Constant.CalendarShowType.START || scheme.getType() == Constant.CalendarShowType.END || scheme.getType() == Constant.CalendarShowType.AUNT){//开始大姨妈
-                mTextPaint.setColor(getResources().getColor(R.color.white));
+            if(scheme.getType() == Constant.CalendarShowType.AUNT || scheme.getType() == Constant.CalendarShowType.FORESEE_AUNT){//大姨妈
+                if(scheme.getType() == Constant.CalendarShowType.FORESEE_AUNT){//预测大姨妈
+                    auntPaint.setColor(getResources().getColor(R.color.foresee_aunt));
+                }else{
+                    auntPaint.setColor(getResources().getColor(R.color.aunt));
+                }
+
                 if(isSelected){
                     RectF rect = new RectF(x+selectItemPadding, y+selectItemPadding, x + mItemWidth - selectItemPadding, y + mItemHeight -selectItemPadding);
                     canvas.drawRoundRect(rect, insideCorners, insideCorners, auntPaint);
@@ -123,12 +138,12 @@ public class ComingMonthView extends MonthView {
                     RectF rect = new RectF(x+itemPadding, y+itemPadding, x + mItemWidth - itemPadding, y + mItemHeight -itemPadding);
                     canvas.drawRoundRect(rect, corners, corners, auntPaint);
                 }
-
-                if(scheme.getType() == Constant.CalendarShowType.START){
-                    topList.add(R.mipmap.icon_cl_start);
-                }else if(scheme.getType() == Constant.CalendarShowType.END){
-                    topList.add(R.mipmap.icon_cl_end);
-                }
+            }else if(scheme.getType() == Constant.CalendarShowType.START){
+                topList.add(R.mipmap.icon_cl_start);
+            }else if(scheme.getType() == Constant.CalendarShowType.END){
+                topList.add(R.mipmap.icon_cl_end);
+            }else if(scheme.getType()==Constant.CalendarShowType.OVULATION){//排卵日
+                topList.add(R.mipmap.icon_cl_ovulation);
             }else if(scheme.getType() == Constant.CalendarShowType.SEX){
                 topList.add(R.mipmap.icon_cl_sex);
             }else if(scheme.getType() == Constant.CalendarShowType.FLOW){

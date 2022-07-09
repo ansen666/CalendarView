@@ -9,13 +9,15 @@
     <color name="solar_background">#009988</color>
 
 
-    <color name="mainColor">#FF4D88</color>
+    <color name="mainColor">#FE4E87</color>
     <color name="white">#ffffff</color>
 
     <color name="foresee_bg_color">#FFCBDC</color>
     <color name="select_day_color">#FF0000</color>
 
+    <color name="aunt">@color/mainColor</color> <!--     大姨妈，文本颜色 -->
+    <color name="foresee_aunt">#FDD9E5</color> <!--     预测经期，文本颜色 -->
+    <color name="security">#77D887</color>  <!--    怀孕向上或者向下，文本颜色 -->
+    <color name="period_ovulation">#BE90FF</color> <!--    易孕期或排卵期，文本颜色 -->
 
-    <color name="pregnant_up">#77D887</color>  <!--    怀孕向上或者向下，文本颜色 -->
-    <color name="ovulation_color">#BE90FF</color> <!--    排卵期，文本颜色 -->
 </resources>

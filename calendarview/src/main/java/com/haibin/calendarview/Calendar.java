@@ -99,7 +99,6 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
      */
     private int schemeColor;
 
-
     /**
      * 多标记
      * multi scheme,using addScheme();
@@ -198,7 +197,6 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
     public void setSchemeColor(int schemeColor) {
         this.schemeColor = schemeColor;
     }
-
 
     public List<Scheme> getSchemes() {
         return schemes;
