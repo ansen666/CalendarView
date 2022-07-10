@@ -1,13 +1,20 @@
 package com.haibin.calendarviewproject.coming;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.text.TextUtils;
+import android.graphics.RectF;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
+import com.haibin.calendarviewproject.R;
+import com.haibin.calendarviewproject.util.BaseConst;
+import com.haibin.calendarviewproject.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 演示一个变态需求的周视图
@@ -15,100 +22,35 @@ import com.haibin.calendarview.WeekView;
  */
 
 public class ComingWeekView extends WeekView {
+    private Paint auntPaint = new Paint();
+    private Paint auntPaintStroke = new Paint();
+    private Paint mTextPaint = new Paint();//文本画笔
 
-
-    private int mRadius;
-
-    /**
-     * 自定义魅族标记的文本画笔
-     */
-    private Paint mTextPaint = new Paint();
-
-
-    /**
-     * 24节气画笔
-     */
-    private Paint mSolarTermTextPaint = new Paint();
-
-    /**
-     * 背景圆点
-     */
-    private Paint mPointPaint = new Paint();
-
-    /**
-     * 今天的背景色
-     */
-    private Paint mCurrentDayPaint = new Paint();
-
-
-    /**
-     * 圆点半径
-     */
-    private float mPointRadius;
-
-    private int mPadding;
-
-    private float mCircleRadius;
-    /**
-     * 自定义魅族标记的圆形背景
-     */
-    private Paint mSchemeBasicPaint = new Paint();
-
-    private float mSchemeBaseLine;
+    private int itemPadding,selectItemPadding;
+    private int corners,insideCorners;
 
     public ComingWeekView(Context context) {
         super(context);
-        mTextPaint.setTextSize(dipToPx(context, 8));
-        mTextPaint.setColor(0xffffffff);
+
+        auntPaint.setAntiAlias(true);
+        auntPaint.setStyle(Paint.Style.FILL);
+
+        auntPaintStroke.setStyle(Paint.Style.STROKE);
+        auntPaintStroke.setStrokeWidth(Utils.dipToPx(context, 1.5F));
+        auntPaintStroke.setColor(getResources().getColor(R.color.mainColor));
+
+        mTextPaint.setTextSize(Utils.dipToPx(context, 16));
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setFakeBoldText(true);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
 
-
-        mSolarTermTextPaint.setColor(0xff489dff);
-        mSolarTermTextPaint.setAntiAlias(true);
-        mSolarTermTextPaint.setTextAlign(Paint.Align.CENTER);
-
-        mSchemeBasicPaint.setAntiAlias(true);
-        mSchemeBasicPaint.setStyle(Paint.Style.FILL);
-        mSchemeBasicPaint.setTextAlign(Paint.Align.CENTER);
-        mSchemeBasicPaint.setFakeBoldText(true);
-        mSchemeBasicPaint.setColor(Color.WHITE);
-
-        mPointPaint.setAntiAlias(true);
-        mPointPaint.setStyle(Paint.Style.FILL);
-        mPointPaint.setTextAlign(Paint.Align.CENTER);
-        mPointPaint.setColor(Color.RED);
-
-
-        mCurrentDayPaint.setAntiAlias(true);
-        mCurrentDayPaint.setStyle(Paint.Style.FILL);
-        mCurrentDayPaint.setColor(0xFFeaeaea);
-
-
-        mCircleRadius = dipToPx(getContext(), 7);
-
-        mPadding = dipToPx(getContext(), 3);
-
-        mPointRadius = dipToPx(context, 2);
-
-        Paint.FontMetrics metrics = mSchemeBasicPaint.getFontMetrics();
-        mSchemeBaseLine = mCircleRadius - metrics.descent + (metrics.bottom - metrics.top) / 2 + dipToPx(getContext(), 1);
-
+        itemPadding=Utils.dipToPx(context, 1);
+        selectItemPadding=Utils.dipToPx(context, 4);
+        corners=Utils.dipToPx(context, 5);
+        insideCorners=Utils.dipToPx(context, 4);
     }
-
-
-    @Override
-    protected void onPreviewHook() {
-        mSolarTermTextPaint.setTextSize(mCurMonthLunarTextPaint.getTextSize());
-        mRadius = Math.min(mItemWidth, mItemHeight) / 11 * 5;
-    }
-
 
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, boolean hasScheme) {
-        int cx = x + mItemWidth / 2;
-        int cy = mItemHeight / 2;
-        canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
         return true;
     }
 
@@ -116,85 +58,103 @@ public class ComingWeekView extends WeekView {
     @Override
     protected void onDrawScheme(Canvas canvas, Calendar calendar, int x) {
 
-        boolean isSelected = isSelected(calendar);
-        if (isSelected) {
-            mPointPaint.setColor(Color.WHITE);
-        } else {
-            mPointPaint.setColor(Color.GRAY);
-        }
-
-        canvas.drawCircle(x + mItemWidth / 2, mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
     }
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     @Override
     protected void onDrawText(Canvas canvas, Calendar calendar, int x, boolean hasScheme, boolean isSelected) {
         int cx = x + mItemWidth / 2;
-        int cy = mItemHeight / 2;
-        int top = -mItemHeight / 6;
-
-        if (calendar.isCurrentDay() && !isSelected) {
-            canvas.drawCircle(cx, cy, mRadius, mCurrentDayPaint);
+        if(calendar.getSchemeColor()!=0){
+            mTextPaint.setColor(getResources().getColor(calendar.getSchemeColor()));
         }
 
-        if(hasScheme){
-            canvas.drawCircle(x + mItemWidth - mPadding - mCircleRadius / 2, mPadding + mCircleRadius, mCircleRadius, mSchemeBasicPaint);
-
-            mTextPaint.setColor(calendar.getSchemeColor());
-
-            canvas.drawText(calendar.getScheme(), x + mItemWidth - mPadding - mCircleRadius, mPadding + mSchemeBaseLine, mTextPaint);
+        if(isSelected){
+            RectF rectStroke = new RectF(x+itemPadding*2, itemPadding*2, x + mItemWidth - itemPadding*2, mItemHeight -itemPadding*2);
+            canvas.drawRoundRect(rectStroke, corners, corners, auntPaintStroke);
         }
 
-        if (calendar.isWeekend() && calendar.isCurrentMonth()) {
-            mCurMonthTextPaint.setColor(0xFF489dff);
-            mCurMonthLunarTextPaint.setColor(0xFF489dff);
-            mSchemeTextPaint.setColor(0xFF489dff);
-            mSchemeLunarTextPaint.setColor(0xFF489dff);
-            mOtherMonthLunarTextPaint.setColor(0xFF489dff);
-            mOtherMonthTextPaint.setColor(0xFF489dff);
-        } else {
-            mCurMonthTextPaint.setColor(0xff333333);
-            mCurMonthLunarTextPaint.setColor(0xffCFCFCF);
-            mSchemeTextPaint.setColor(0xff333333);
-            mSchemeLunarTextPaint.setColor(0xffCFCFCF);
-
-            mOtherMonthTextPaint.setColor(0xFFe1e1e1);
-            mOtherMonthLunarTextPaint.setColor(0xFFe1e1e1);
+        if(hasScheme ){//
+            drawScheme(canvas,calendar,x,0,isSelected);
         }
-
-        if (isSelected) {
-            canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
-                    mSelectTextPaint);
-            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + mItemHeight / 10, mSelectedLunarTextPaint);
-        } else if (hasScheme) {
-
-            canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
-                    calendar.isCurrentMonth() ? mSchemeTextPaint : mOtherMonthTextPaint);
-
-            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + mItemHeight / 10,
-                    !TextUtils.isEmpty(calendar.getSolarTerm()) ? mSolarTermTextPaint : mSchemeLunarTextPaint);
-        } else {
-            canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
-                    calendar.isCurrentDay() ? mCurDayTextPaint :
-                            calendar.isCurrentMonth() ? mCurMonthTextPaint : mOtherMonthTextPaint);
-
-            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + mItemHeight / 10,
-                    calendar.isCurrentDay() ? mCurDayLunarTextPaint :
-                            !TextUtils.isEmpty(calendar.getSolarTerm()) ? mSolarTermTextPaint :
-                                    calendar.isCurrentMonth() ?
-                                            mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
-        }
+//        Log.i("ansen","onDrawText 年:"+calendar.getYear()+" 月:"+calendar.getMonth()+" 日:"+calendar.getDay());
+        canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine,mTextPaint);
     }
 
-    /**
-     * dp转px
-     *
-     * @param context context
-     * @param dpValue dp
-     * @return px
-     */
-    private static int dipToPx(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+    private void drawScheme(Canvas canvas, Calendar calendar, int x, int y, boolean isSelected){
+        List<Calendar.Scheme> schemes = calendar.getSchemes();
+        if(schemes==null||schemes.size()==0){
+            return ;
+        }
+
+//        MLog.i("画矩形 onDrawScheme x:"+x+" y:"+y);
+
+        List<Integer> topList=new ArrayList<>();
+        List<Integer> bottomList=new ArrayList<>();
+
+        for(int i=0;i<schemes.size();i++){
+            Calendar.Scheme scheme=schemes.get(i);
+
+            if(scheme.getType() == BaseConst.ShowType.AUNT || scheme.getType() == BaseConst.ShowType.FORESEE_AUNT){//大姨妈
+                if(scheme.getType() == BaseConst.ShowType.FORESEE_AUNT){//预测大姨妈
+                    auntPaint.setColor(getResources().getColor(R.color.foresee_aunt));
+                }else{
+                    auntPaint.setColor(getResources().getColor(R.color.aunt));
+                }
+
+                if(isSelected){
+                    RectF rect = new RectF(x+selectItemPadding, y+selectItemPadding, x + mItemWidth - selectItemPadding, y + mItemHeight -selectItemPadding);
+                    canvas.drawRoundRect(rect, insideCorners, insideCorners, auntPaint);
+                }else{
+                    RectF rect = new RectF(x+itemPadding, y+itemPadding, x + mItemWidth - itemPadding, y + mItemHeight -itemPadding);
+                    canvas.drawRoundRect(rect, corners, corners, auntPaint);
+                }
+            }else if(scheme.getType() == BaseConst.ShowType.START){
+                topList.add(R.mipmap.icon_cl_start);
+            }else if(scheme.getType() == BaseConst.ShowType.END){
+                topList.add(R.mipmap.icon_cl_end);
+            }else if(scheme.getType()== BaseConst.ShowType.OVULATION){//排卵日
+                topList.add(R.mipmap.icon_cl_ovulation);
+            }else if(scheme.getType() == BaseConst.ShowType.SEX){
+                topList.add(R.mipmap.icon_cl_sex);
+            }else if(scheme.getType() == BaseConst.ShowType.FLOW){
+                topList.add(R.mipmap.icon_cl_flow);
+            }else if(scheme.getType() == BaseConst.ShowType.SYMPTOM){
+                bottomList.add(R.mipmap.icon_cl_symptom);
+            }else if(scheme.getType() == BaseConst.ShowType.MOOD){
+                bottomList.add(R.mipmap.icon_cl_mood);
+            }else if(scheme.getType() == BaseConst.ShowType.TEMPERATURE){
+                bottomList.add(R.mipmap.icon_cl_temperature);
+            }else if(scheme.getType() == BaseConst.ShowType.HABIT){
+                bottomList.add(R.mipmap.icon_cl_habit);
+            }
+        }
+
+        for(int i=0;i<topList.size();i++){
+            if(i>2){
+                continue;
+            }
+            Bitmap bitmap= BitmapFactory.decodeResource(getResources(),topList.get(i));
+            int xLocation = x + mItemWidth / 2;
+            if(i==1){
+                xLocation = xLocation - bitmap.getWidth() - Utils.dipToPx(getContext(), 1);
+            }else if(i==2){
+                xLocation = xLocation + bitmap.getWidth() + Utils.dipToPx(getContext(), 1);
+            }
+            canvas.drawBitmap(bitmap,xLocation-bitmap.getWidth()/2,y+Utils.dipToPx(getContext(), 4),mTextPaint);
+        }
+
+        for(int i=0;i<bottomList.size();i++){
+            if(i>2){
+                continue;
+            }
+            Bitmap bitmap= BitmapFactory.decodeResource(getResources(),bottomList.get(i));
+            int xLocation = x + mItemWidth / 2;
+            if(i==1){
+                xLocation = xLocation - bitmap.getWidth() - Utils.dipToPx(getContext(), 1);
+            }else if(i==2){
+                xLocation = xLocation + bitmap.getWidth() + Utils.dipToPx(getContext(), 1);
+            }
+            canvas.drawBitmap(bitmap,xLocation-bitmap.getWidth()/2,y+mTextBaseLine+bitmap.getHeight()/2-Utils.dipToPx(getContext(), 1),mTextPaint);
+        }
     }
 }

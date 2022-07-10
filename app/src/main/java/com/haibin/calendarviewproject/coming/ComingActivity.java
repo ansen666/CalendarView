@@ -20,8 +20,7 @@ import com.haibin.calendarviewproject.base.activity.BaseActivity;
 import com.haibin.calendarviewproject.group.GroupItemDecoration;
 import com.haibin.calendarviewproject.group.GroupRecyclerView;
 import com.haibin.calendarviewproject.util.AuntUtil;
-import com.haibin.calendarviewproject.util.CalendarUtil;
-import com.haibin.calendarviewproject.util.Constant;
+import com.haibin.calendarviewproject.util.BaseConst;
 import com.haibin.calendarviewproject.util.MLog;
 
 import java.util.GregorianCalendar;
@@ -126,37 +125,37 @@ public class ComingActivity extends BaseActivity implements
         calendar.setDay(day);
 
         if(year == 2022 && month== 7 && day == 9){
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.START));
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.SEX));
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.FLOW));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.START));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.SEX));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.FLOW));
 
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.FLOW));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.FLOW));
 
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.SYMPTOM));
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.MOOD));
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.TEMPERATURE));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.SYMPTOM));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.MOOD));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.TEMPERATURE));
         }
 
         if(year == 2022 && month== 7 && day == 10){
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.AUNT));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.AUNT));
 
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.SEX));
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.DYSMENORRHEA));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.SEX));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.DYSMENORRHEA));
         }
 
         if(year == 2022 && month== 7 && day == 11){
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.END));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.END));
         }
 
         if(year == 2022 && month== 7 && day == 20){
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.MOOD));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.MOOD));
         }
 
         if(year == 2022 && month== 6 && day == 11){
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.AUNT));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.AUNT));
 
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.SEX));
-            calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.DYSMENORRHEA));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.SEX));
+            calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.DYSMENORRHEA));
         }
         return calendar;
     }
@@ -206,27 +205,27 @@ public class ComingActivity extends BaseActivity implements
         for(int i=0;i<days.length;i++){
             int type=days[i];
             Calendar calendar = new Calendar(year,month,i+1);
-            if(type==Constant.CalendarShowType.AUNT || type==Constant.CalendarShowType.FORESEE_AUNT){//大姨妈
+            if(type== BaseConst.ShowType.AUNT || type== BaseConst.ShowType.FORESEE_AUNT){//大姨妈
                 calendar.setSchemeColor(R.color.white);
                 calendar.addScheme(new Calendar.Scheme(type));
-            }else if(type==Constant.CalendarShowType.SECURITY){//安全期
+            }else if(type== BaseConst.ShowType.SECURITY){//安全期
                 calendar.setSchemeColor(R.color.security);
-            }else if(type==Constant.CalendarShowType.OVULATION){//排卵日
+            }else if(type== BaseConst.ShowType.OVULATION){//排卵日
                 calendar.setSchemeColor(R.color.period_ovulation);
-                calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.OVULATION));
-            }else if(type==Constant.CalendarShowType.PERIOD_OVULATION){//排卵期
+                calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.OVULATION));
+            }else if(type== BaseConst.ShowType.PERIOD_OVULATION){//排卵期
                 calendar.setSchemeColor(R.color.period_ovulation);
             }
 
-//            if(i==8){
-//                calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.START));
-//                calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.SEX));
-//                calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.FLOW));
-//
-//                calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.SYMPTOM));
-//                calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.MOOD));
-//                calendar.addScheme(new Calendar.Scheme(Constant.CalendarShowType.TEMPERATURE));
-//            }
+            if(i==8){
+                calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.START));
+                calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.SEX));
+                calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.FLOW));
+
+                calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.SYMPTOM));
+                calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.MOOD));
+                calendar.addScheme(new Calendar.Scheme(BaseConst.ShowType.TEMPERATURE));
+            }
 
             map.put(calendar.toString(),calendar);
 //            MLog.i("年:"+year+" 月:"+month+" 日:"+(i+1)+" color:"+calendar.getSchemeColor());

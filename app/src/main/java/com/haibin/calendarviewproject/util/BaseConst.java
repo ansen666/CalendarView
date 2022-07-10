@@ -4,8 +4,8 @@ package com.haibin.calendarviewproject.util;
  * @author Ansen
  * @create time 2022/7/6
  */
-public class Constant {
-    public static class CalendarShowType{
+public class BaseConst {
+    public static class ShowType {
         public static final int START=1;//开始大姨妈
         public static final int END=2;//结束大姨妈
 

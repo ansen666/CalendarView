@@ -6,13 +6,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
 import com.haibin.calendarviewproject.R;
-import com.haibin.calendarviewproject.util.Constant;
-import com.haibin.calendarviewproject.util.MLog;
+import com.haibin.calendarviewproject.util.BaseConst;
+import com.haibin.calendarviewproject.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,45 +32,34 @@ public class ComingMonthView extends MonthView {
      */
     private Paint mTextPaint = new Paint();
 
-    /**
-     * 今天的背景色
-     */
-    private Paint mCurrentDayPaint = new Paint();
-
     private int itemPadding,selectItemPadding;
-    private int paintheight,corners,insideCorners;
+    private int paintHeight,corners,insideCorners;
 
     public ComingMonthView(Context context) {
         super(context);
 
         auntPaint.setAntiAlias(true);
         auntPaint.setStyle(Paint.Style.FILL);
-        auntPaint.setColor(getResources().getColor(R.color.mainColor));
 
-//        auntPaintStroke.setAntiAlias(true);
         auntPaintStroke.setStyle(Paint.Style.STROKE);
-        auntPaintStroke.setStrokeWidth(dipToPx(context, 1.5F));
+        auntPaintStroke.setStrokeWidth(Utils.dipToPx(context, 1.5F));
         auntPaintStroke.setColor(getResources().getColor(R.color.mainColor));
 
         splitPaint.setStyle(Paint.Style.STROKE);
-        splitPaint.setStrokeWidth(dipToPx(context, 0.5f));
+        splitPaint.setStrokeWidth(Utils.dipToPx(context, 0.5f));
         splitPaint.setColor(0x88efefef);
 
-        mTextPaint.setTextSize(dipToPx(context, 14));
+        mTextPaint.setTextSize(Utils.dipToPx(context, 16));
         mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setColor(0xffffffff);
+        mTextPaint.setColor(getResources().getColor(R.color.text_hint_color));
         mTextPaint.setAntiAlias(true);
 //        mTextPaint.setFakeBoldText(true);
 
-        mCurrentDayPaint.setAntiAlias(true);
-        mCurrentDayPaint.setStyle(Paint.Style.FILL);
-        mCurrentDayPaint.setColor(0xFFeaeaea);
-
-        itemPadding=dipToPx(context, 1);
-        selectItemPadding=dipToPx(context, 4);
-        paintheight=measureHeight(mTextPaint);
-        corners=dipToPx(context, 5);
-        insideCorners=dipToPx(context, 4);
+        itemPadding=Utils.dipToPx(context, 1);
+        selectItemPadding=Utils.dipToPx(context, 4);
+        paintHeight=Utils.measureHeight(mTextPaint);
+        corners=Utils.dipToPx(context, 5);
+        insideCorners=Utils.dipToPx(context, 4);
     }
 
     @Override
@@ -107,7 +95,7 @@ public class ComingMonthView extends MonthView {
             drawScheme(canvas,calendar,x,y,isSelected);
         }
 //        Log.i("ansen","onDrawText 年:"+calendar.getYear()+" 月:"+calendar.getMonth()+" 日:"+calendar.getDay());
-        canvas.drawText(String.valueOf(calendar.getDay()), cx, y + paintheight/2 + mItemHeight/2,mTextPaint);
+        canvas.drawText(String.valueOf(calendar.getDay()), cx, y + paintHeight/2 + mItemHeight/2,mTextPaint);
     }
 
     private void drawScheme(Canvas canvas, Calendar calendar, int x, int y, boolean isSelected){
@@ -124,8 +112,8 @@ public class ComingMonthView extends MonthView {
         for(int i=0;i<schemes.size();i++){
             Calendar.Scheme scheme=schemes.get(i);
 
-            if(scheme.getType() == Constant.CalendarShowType.AUNT || scheme.getType() == Constant.CalendarShowType.FORESEE_AUNT){//大姨妈
-                if(scheme.getType() == Constant.CalendarShowType.FORESEE_AUNT){//预测大姨妈
+            if(scheme.getType() == BaseConst.ShowType.AUNT || scheme.getType() == BaseConst.ShowType.FORESEE_AUNT){//大姨妈
+                if(scheme.getType() == BaseConst.ShowType.FORESEE_AUNT){//预测大姨妈
                     auntPaint.setColor(getResources().getColor(R.color.foresee_aunt));
                 }else{
                     auntPaint.setColor(getResources().getColor(R.color.aunt));
@@ -138,23 +126,23 @@ public class ComingMonthView extends MonthView {
                     RectF rect = new RectF(x+itemPadding, y+itemPadding, x + mItemWidth - itemPadding, y + mItemHeight -itemPadding);
                     canvas.drawRoundRect(rect, corners, corners, auntPaint);
                 }
-            }else if(scheme.getType() == Constant.CalendarShowType.START){
+            }else if(scheme.getType() == BaseConst.ShowType.START){
                 topList.add(R.mipmap.icon_cl_start);
-            }else if(scheme.getType() == Constant.CalendarShowType.END){
+            }else if(scheme.getType() == BaseConst.ShowType.END){
                 topList.add(R.mipmap.icon_cl_end);
-            }else if(scheme.getType()==Constant.CalendarShowType.OVULATION){//排卵日
+            }else if(scheme.getType()== BaseConst.ShowType.OVULATION){//排卵日
                 topList.add(R.mipmap.icon_cl_ovulation);
-            }else if(scheme.getType() == Constant.CalendarShowType.SEX){
+            }else if(scheme.getType() == BaseConst.ShowType.SEX){
                 topList.add(R.mipmap.icon_cl_sex);
-            }else if(scheme.getType() == Constant.CalendarShowType.FLOW){
+            }else if(scheme.getType() == BaseConst.ShowType.FLOW){
                 topList.add(R.mipmap.icon_cl_flow);
-            }else if(scheme.getType() == Constant.CalendarShowType.SYMPTOM){
+            }else if(scheme.getType() == BaseConst.ShowType.SYMPTOM){
                 bottomList.add(R.mipmap.icon_cl_symptom);
-            }else if(scheme.getType() == Constant.CalendarShowType.MOOD){
+            }else if(scheme.getType() == BaseConst.ShowType.MOOD){
                 bottomList.add(R.mipmap.icon_cl_mood);
-            }else if(scheme.getType() == Constant.CalendarShowType.TEMPERATURE){
+            }else if(scheme.getType() == BaseConst.ShowType.TEMPERATURE){
                 bottomList.add(R.mipmap.icon_cl_temperature);
-            }else if(scheme.getType() == Constant.CalendarShowType.HABIT){
+            }else if(scheme.getType() == BaseConst.ShowType.HABIT){
                 bottomList.add(R.mipmap.icon_cl_habit);
             }
         }
@@ -166,11 +154,11 @@ public class ComingMonthView extends MonthView {
             Bitmap bitmap= BitmapFactory.decodeResource(getResources(),topList.get(i));
             int xLocation = x + mItemWidth / 2;
             if(i==1){
-                xLocation = xLocation - bitmap.getWidth() - dipToPx(getContext(), 1);
+                xLocation = xLocation - bitmap.getWidth() - Utils.dipToPx(getContext(), 1);
             }else if(i==2){
-                xLocation = xLocation + bitmap.getWidth() + dipToPx(getContext(), 1);
+                xLocation = xLocation + bitmap.getWidth() + Utils.dipToPx(getContext(), 1);
             }
-            canvas.drawBitmap(bitmap,xLocation-bitmap.getWidth()/2,y+dipToPx(getContext(), 4),mTextPaint);
+            canvas.drawBitmap(bitmap,xLocation-bitmap.getWidth()/2,y+Utils.dipToPx(getContext(), 4),mTextPaint);
         }
 
         for(int i=0;i<bottomList.size();i++){
@@ -180,29 +168,13 @@ public class ComingMonthView extends MonthView {
             Bitmap bitmap= BitmapFactory.decodeResource(getResources(),bottomList.get(i));
             int xLocation = x + mItemWidth / 2;
             if(i==1){
-                xLocation = xLocation - bitmap.getWidth() - dipToPx(getContext(), 1);
+                xLocation = xLocation - bitmap.getWidth() - Utils.dipToPx(getContext(), 1);
             }else if(i==2){
-                xLocation = xLocation + bitmap.getWidth() + dipToPx(getContext(), 1);
+                xLocation = xLocation + bitmap.getWidth() + Utils.dipToPx(getContext(), 1);
             }
-            canvas.drawBitmap(bitmap,xLocation-bitmap.getWidth()/2,y+mTextBaseLine+bitmap.getHeight()/2-dipToPx(getContext(), 1),mTextPaint);
+            canvas.drawBitmap(bitmap,xLocation-bitmap.getWidth()/2,y+mTextBaseLine+bitmap.getHeight()/2-Utils.dipToPx(getContext(), 1),mTextPaint);
         }
     }
 
-    public static int measureHeight(Paint paint) {
-        Paint.FontMetricsInt fm = paint.getFontMetricsInt();
-        int textHeight = ~fm.top - (~fm.top - ~fm.ascent) - (fm.bottom - fm.descent);
-        return textHeight;
-    }
 
-    /**
-     * dp转px
-     *
-     * @param context context
-     * @param dpValue dp
-     * @return px
-     */
-    private static int dipToPx(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
 }

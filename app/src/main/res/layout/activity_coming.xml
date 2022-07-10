@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:ignore="RtlHardcoded,HardcodedText,RtlSymmetry,SmallSp">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_tool"
@@ -108,7 +107,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:background="@color/white"
             app:group_background="@color/content_background"
             app:group_center="false"
             app:group_has_header="false"

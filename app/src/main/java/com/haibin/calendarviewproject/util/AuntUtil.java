@@ -24,23 +24,23 @@ public class AuntUtil {
             String result="";
             if (dayRemainder >= 0 && dayRemainder <= (myavgMenses-1)) {
                 if(currentTime > CalendarUtil.getTodayTimeMillis()){
-                    tag[i-1] = Constant.CalendarShowType.FORESEE_AUNT;//推算大姨妈
+                    tag[i-1] = BaseConst.ShowType.FORESEE_AUNT;//推算大姨妈
                 }else{
-                    tag[i-1] = Constant.CalendarShowType.AUNT;//大姨妈
+                    tag[i-1] = BaseConst.ShowType.AUNT;//大姨妈
                 }
             }
             if (dayRemainder >= myavgMenses && dayRemainder <= (mensesCyc - 20)) {
-                tag[i-1] = Constant.CalendarShowType.SECURITY;//安全期
+                tag[i-1] = BaseConst.ShowType.SECURITY;//安全期
             }
             if (dayRemainder >= (mensesCyc - 19) && dayRemainder <= (mensesCyc - 10)) {
                 if(dayRemainder == 14){
-                    tag[i-1] = Constant.CalendarShowType.OVULATION;//排卵日
+                    tag[i-1] = BaseConst.ShowType.OVULATION;//排卵日
                 }else{
-                    tag[i-1] = Constant.CalendarShowType.PERIOD_OVULATION;//排卵期
+                    tag[i-1] = BaseConst.ShowType.PERIOD_OVULATION;//排卵期
                 }
             }
             if (dayRemainder >= (mensesCyc - 9) && dayRemainder <= (mensesCyc - 1)) {
-                tag[i-1] = Constant.CalendarShowType.SECURITY;//安全期
+                tag[i-1] = BaseConst.ShowType.SECURITY;//安全期
             }
 //            System.out.println("相差天数:"+dayDiff + " 年:"+year+" 月:"+month+" 日:"+i+" "+result+" dayRemainder："+dayRemainder);
         }
